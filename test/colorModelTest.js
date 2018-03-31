@@ -10,20 +10,40 @@ describe("Color Model", () => {
   });
 
   describe("Color Model Attributes", () => {
-    let goodColor, badColor;
+    let goodColor, badColor, badColor2;
 
     beforeEach(() => {
       return Color.create({
         name: "PapayaWhip",
-        hex: "#ffefd5"
+        hex: "#ffefd5",
+        red: "255",
+        green: "239",
+        blue: "213",
+        price: 2499
       }).then(newColor => (goodColor = newColor));
     });
 
     beforeEach(() => {
       return Color.create({
-        name: 191970
+        name: 191970,
+        red: "240",
+        green: "248",
+        blue: "255",
+        price: 1
       }).then(newColor => (badColor = newColor));
     });
+
+    beforeEach(() => {
+      return Color.create({
+        name: "AliceBlue",
+        hex: "f0f8ff",
+        red: "240",
+        green: "248",
+        blue: "255",
+        price: 1000
+      }).then(newColor => (badColor2 = newColor));
+    });
+
     describe("Color Names...", () => {
       it("Should be a STRING ", () => {
         assert.equal(typeof goodColor.name, "string");
@@ -37,9 +57,30 @@ describe("Color Model", () => {
       });
       xit("Should be UNIQUE");
       it("Can be null", () => {
-        assert.equal( badColor.hex, null);
+        assert.equal(badColor.hex, null);
       });
-      xit("Should start with '#'")
+      it("Should start with '#'", () => {
+        assert.equal(badColor2.hex, "#f0f8ff");
+      });
+    });
+    describe("Color RGB...", () => {
+      it("Should properly format the other three values as one RGB(red, green, blue)", () => {
+        assert.equal(goodColor.rgb, "rgb(255, 239, 213)");
+      });
+    });
+    describe("Color prices...", () => {
+      it("Should have a value in pennies", () => {
+        assert.equal(goodColor.price, 2499);
+      });
+      if (
+        ("Should convert price into dollars",
+        () => {
+          assert.equal(goodColor.priceInDollars, `$24.99`);
+        })
+      );
+      it("Should preserve the 00s for whole numbers in priceInDollars", () => {
+        assert.equal(badColor2.priceInDollars, `$10.00`);
+      });
     });
   });
 });
