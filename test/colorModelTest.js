@@ -46,18 +46,18 @@ describe("Color Model", () => {
 
     describe("Color Names...", () => {
       it("Should be a STRING ", () => {
-        assert.equal(typeof goodColor.name, "string");
+        assert.typeOf(goodColor.name, "string");
       });
       xit("Should be a UNIQUE", () => {});
       xit("Should throw a validation error for names with numbers");
     });
     describe("Color HEX value...", () => {
       it("Should be a STRING", () => {
-        assert.equal(typeof goodColor.hex, "string");
+        assert.typeOf(goodColor.hex, "string");
       });
       xit("Should be UNIQUE");
       it("Can be null", () => {
-        assert.equal(badColor.hex, null);
+         assert.equal(badColor.hex, null);
       });
       it("Should start with '#'", () => {
         assert.equal(badColor2.hex, "#f0f8ff");
